@@ -1,0 +1,139 @@
+Here’s a sample code implementation using **TypeScript** with **React** to enable location search (city and state) with **Google Places API**. This example includes setting up a Google Places autocomplete input for cities, with the ability to select a city, fetch details, and handle those details in your React state.
+
+### 1. **Set Up Google Places API Key**
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/).
+2. Enable the **Places API** and **Maps JavaScript API**.
+3. Get your API key and restrict it as needed.
+
+### 2. **Install TypeScript and React Types**
+
+If you haven't set up TypeScript with React, you can install the necessary types:
+
+```bash
+npm install @types/react @types/react-dom --save-dev
+```
+
+### 3. **City Search Component Code**
+
+Create a `CitySearch` component that leverages Google Places Autocomplete for selecting cities.
+
+#### Code: `CitySearch.tsx`
+
+```typescript
+import React, { useRef, useEffect, useState } from 'react';
+
+interface City {
+  name: string;
+  lat: number;
+  lng: number;
+}
+
+const CitySearch: React.FC = () => {
+  const [selectedCity, setSelectedCity] = useState<City | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+
+  useEffect(() => {
+    if (!window.google || !inputRef.current) return;
+
+    // Initialize Google Places Autocomplete with only 'cities' type
+    autocompleteRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
+      types: ['(cities)'], // Restrict search to cities
+      componentRestrictions: { country: 'us' }, // Optional: restrict by country code
+    });
+
+    // Add listener for place selection
+    autocompleteRef.current.addListener('place_changed', handlePlaceSelect);
+  }, []);
+
+  // Handle place selection and extract necessary details
+  const handlePlaceSelect = () => {
+    const place = autocompleteRef.current?.getPlace();
+    if (!place || !place.geometry) return;
+
+    const cityData: City = {
+      name: place.address_components?.[0].long_name || place.formatted_address || '',
+      lat: place.geometry.location?.lat() || 0,
+      lng: place.geometry.location?.lng() || 0,
+    };
+
+    setSelectedCity(cityData);
+    console.log('Selected City:', cityData); // Debugging: log selected city
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        ref={inputRef}
+        placeholder="Search for a city"
+        style={{ width: '100%', padding: '8px' }}
+      />
+      {selectedCity && (
+        <div>
+          <h3>Selected City:</h3>
+          <p>{selectedCity.name}</p>
+          <p>Latitude: {selectedCity.lat}</p>
+          <p>Longitude: {selectedCity.lng}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CitySearch;
+```
+
+### Explanation of Key Parts
+
+1. **Autocomplete Initialization**:
+   - We create a `ref` for the input (`inputRef`) and the autocomplete instance (`autocompleteRef`).
+   - In the `useEffect` hook, Google Places Autocomplete is initialized with `types: ['(cities)']` to restrict the search to cities.
+
+2. **Handling Place Selection**:
+   - The `handlePlaceSelect` function is triggered when a place is selected.
+   - It retrieves the selected place’s name, latitude, and longitude, then stores it in the `selectedCity` state.
+   - The `City` interface defines the structure of the city data (`name`, `lat`, and `lng`).
+
+3. **Displaying Selected City**:
+   - If a city is selected, it displays the city’s name, latitude, and longitude.
+
+---
+
+### 4. **Using the Component**
+
+You can use the `CitySearch` component within your app as follows:
+
+```typescript
+import React from 'react';
+import CitySearch from './CitySearch';
+
+const App: React.FC = () => {
+  return (
+    <div style={{ padding: '20px' }}>
+      <h1>City Search</h1>
+      <CitySearch />
+    </div>
+  );
+};
+
+export default App;
+```
+
+### 5. **Integrate Google Places Script**
+
+Add the Google Places script to your `public/index.html` file, replacing `YOUR_API_KEY` with your Google API key:
+
+```html
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+```
+
+### 6. **Optional Enhancements**
+
+- **Component Restrictions**: You can restrict search results to specific countries by modifying `componentRestrictions` in `Autocomplete` options (e.g., `{ country: 'us' }`).
+- **Display Full Address Details**: If needed, you can expand `City` to include more fields from `place.address_components`.
+
+---
+
+This setup allows users to search for cities and get essential location data, making it easy to add cities without manually managing a city/state database. Let me know if you’d like additional functionality, such as handling specific error cases or implementing state management for multiple cities!

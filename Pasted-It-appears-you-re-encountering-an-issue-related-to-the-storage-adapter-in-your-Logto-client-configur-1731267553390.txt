@@ -1,0 +1,63 @@
+It appears you're encountering an issue related to the storage adapter in your Logto client configuration. Properly implementing a storage adapter is crucial for managing user authentication information effectively. Here's a step-by-step guide to ensure your setup is correct:
+
+**1. Implementing the Storage Interface:**
+
+Logto's SDK provides a `Storage` interface that you need to implement based on your web framework. This interface typically includes methods like `getItem` and `setItem` to handle session data. For example, in a Node.js environment, you might implement it as follows:
+
+```javascript
+class SessionStorage {
+  constructor(session) {
+    this.session = session;
+  }
+
+  getItem(key) {
+    return this.session[key] || null;
+  }
+
+  setItem(key, value) {
+    this.session[key] = value;
+  }
+}
+```
+
+Ensure that your storage mechanism (e.g., session, database) is properly initialized and accessible within your application context.
+
+**2. Integrating the Storage Adapter with Logto Client:**
+
+When initializing the Logto client, pass an instance of your storage adapter to manage authentication states. Here's an example in a Node.js environment:
+
+```javascript
+const logtoClient = new LogtoClient({
+  appId: 'YOUR_APP_ID',
+  appSecret: 'YOUR_APP_SECRET',
+  endpoint: 'YOUR_LOGTO_ENDPOINT',
+  storage: new SessionStorage(req.session), // Assuming you're using express-session
+});
+```
+
+Replace `'YOUR_APP_ID'`, `'YOUR_APP_SECRET'`, and `'YOUR_LOGTO_ENDPOINT'` with your actual Logto application credentials.
+
+**3. Handling Session Management:**
+
+Ensure that your session management middleware is correctly set up and that sessions are properly initialized before interacting with the Logto client. For instance, in an Express.js application, you might use `express-session` middleware:
+
+```javascript
+const session = require('express-session');
+
+app.use(session({
+  secret: 'your-session-secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Set to true in production
+}));
+```
+
+This setup ensures that each request has an associated session, which the Logto client can utilize for storing authentication information.
+
+**4. Verifying the Configuration:**
+
+After implementing the storage adapter and integrating it with the Logto client, test your authentication flow to ensure that user sessions are managed correctly. Monitor for any errors related to storage or session handling and adjust your implementation as needed.
+
+For more detailed guidance, refer to Logto's official documentation on integrating with various frameworks and implementing storage adapters. 
+
+By following these steps, you should be able to resolve the storage adapter issue and have a properly configured Logto client for authentication. 

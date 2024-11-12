@@ -1,0 +1,28 @@
+The above error occurred in the <DashboardLayout> component:
+
+    at DashboardLayout (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/src/components/DashboardLayout.tsx:31:43)
+    at Dashboard (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/src/pages/Dashboard.tsx:27:29)
+    at Route (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/@fs/home/runner/LocalQR/node_modules/.vite/deps/wouter.js?v=a266bc28:191:16)
+    at Switch (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/@fs/home/runner/LocalQR/node_modules/.vite/deps/wouter.js?v=a266bc28:247:17)
+    at SWRConfig (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/@fs/home/runner/LocalQR/node_modules/.vite/deps/swr.js?v=a266bc28:423:11)
+    at AuthProvider (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/src/components/AuthProvider.tsx:32:32)
+    at Provider (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/@fs/home/runner/LocalQR/node_modules/.vite/deps/react-redux.js?v=a266bc28:1097:3)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+at DashboardLayout (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/src/components/DashboardLayout.tsx:31:43)
+at Dashboard (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/src/pages/Dashboard.tsx:27:29)
+at Route (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/@fs/home/runner/LocalQR/node_modules/.vite/deps/wouter.js?v=a266bc28:191:16)
+at Switch (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/@fs/home/runner/LocalQR/node_modules/.vite/deps/wouter.js?v=a266bc28:247:17)
+at SWRConfig (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/@fs/home/runner/LocalQR/node_modules/.vite/deps/swr.js?v=a266bc28:423:11)
+at AuthProvider (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/src/components/AuthProvider.tsx:32:32)
+at Provider (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/@fs/home/runner/LocalQR/node_modules/.vite/deps/react-redux.js?v=a266bc28:1097:3)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+at t.value (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+Must be used inside  context.

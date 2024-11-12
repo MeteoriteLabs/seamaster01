@@ -1,0 +1,25 @@
+ailed to load resource: the server responded with a status of 500 (Internal Server Error)Understand this errorAI
+api/places:1 
+        
+        
+       Failed to load resource: the server responded with a status of 500 (Internal Server Error)Understand this errorAI
+js?key=AIzaSyCM6WqSbDWe_02H-nbK-Qa-3XAaNBwip7I&libraries=places:1093 Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading
+ifa @ js?key=AIzaSyCM6WqSbDWe_02H-nbK-Qa-3XAaNBwip7I&libraries=places:1093Understand this warningAI
+MapView.tsx:48 Google Maps loaded successfully
+js?key=AIzaSyCM6WqSbDWe_02H-nbK-Qa-3XAaNBwip7I&libraries=places:1028 Element with name "gmp-internal-element-support-verification" already defined.
+_.Tl @ js?key=AIzaSyCM6WqSbDWe_02H-nbK-Qa-3XAaNBwip7I&libraries=places:1028Understand this warningAI
+js?key=AIzaSyCM6WqSbDWe_02H-nbK-Qa-3XAaNBwip7I&libraries=places:1101 You have included the Google Maps JavaScript API multiple times on this page. This may cause unexpected errors.
+cfa @ js?key=AIzaSyCM6WqSbDWe_02H-nbK-Qa-3XAaNBwip7I&libraries=places:1101Understand this errorAI
+js?key=AIzaSyCM6WqSbDWe_02H-nbK-Qa-3XAaNBwip7I&libraries=places:1093 Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading
+ifa @ js?key=AIzaSyCM6WqSbDWe_02H-nbK-Qa-3XAaNBwip7I&libraries=places:1093Understand this warningAI
+MapView.tsx:48 Google Maps loaded successfully
+js?key=AIzaSyCM6WqSbDWe_02H-nbK-Qa-3XAaNBwip7I&libraries=places:1095 Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'EH')
+    at js?key=AIzaSyCM6WqSbDWe_02H-nbK-Qa-3XAaNBwip7I&libraries=places:1095:243Understand this errorAI
+favorites:1 
+        
+        
+       Failed to load resource: the server responded with a status of 502 (Bad Gateway)Understand this errorAI
+fetcher.ts:13 
+        
+        
+       GET https://dc63faf4-3d0b-45a8-86d3-d790dca4a41e-00-192616b4e8dlu.sisko.replit.dev/api/places 500 (Internal Server Error)

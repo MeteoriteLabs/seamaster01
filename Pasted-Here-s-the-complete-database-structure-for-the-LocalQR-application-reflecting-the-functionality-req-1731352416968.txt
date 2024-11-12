@@ -1,0 +1,162 @@
+Here’s the complete database structure for the LocalQR application, reflecting the functionality requirements discussed for the Favorites Page, city-based lists, user profile management, automated categorization, QR code generation, and analytics tracking.
+
+---
+
+### Complete Database Structure
+
+---
+
+#### 1. **Users Table**
+   - Stores authentication and user-specific data.
+   - **Fields**:
+     - `user_id` (PK, Integer) – unique identifier for each user.
+     - `email` (Varchar, Unique, Not Null) – user’s email address.
+     - `password` (Hashed, Varchar, Not Null) – hashed password for security.
+     - `phone_number` (Varchar, Optional) – optional phone number for verification.
+     - `email_verified` (Boolean, Default False) – indicates if email is verified.
+     - `phone_verified` (Boolean, Default False) – indicates if phone is verified.
+     - `created_at` (Timestamp, Default Current Timestamp) – account creation date.
+     - `deleted_at` (Timestamp, Optional) – account deletion date (soft delete).
+     - `role` (Enum, e.g., "user", "admin") – role type.
+
+---
+
+#### 2. **Accounts Table**
+   - Stores profile-specific data and links to `Users`.
+   - **Fields**:
+     - `account_id` (PK, Integer) – unique identifier for each account.
+     - `user_id` (FK, Integer, references `Users.user_id`, Unique, Not Null) – links to the user’s record.
+     - `username` (Varchar, Unique, Not Null) – unique name for profile URLs (e.g., `www.localQR.earth/username`).
+     - `name` (Varchar) – display name.
+     - `bio` (Text) – user’s bio or profile description.
+     - `account_type` (Enum, e.g., "personal", "business") – specifies the type of account.
+     - `profile_picture` (Varchar for image URL) – URL for the profile image.
+     - `location_id` (FK, references `Cities.city_id`, Optional) – primary location of the user.
+
+---
+
+#### 3. **Social_Media Table**
+   - Stores social media links for accounts with visibility options.
+   - **Fields**:
+     - `social_media_id` (PK, UniqueID) – unique identifier for each social media link.
+     - `account_id` (FK, Integer, references `Accounts.account_id`) – links to the account.
+     - `type` (Enum, e.g., Instagram, Facebook, etc.) – type of social media platform.
+     - `link` (Varchar) – URL to the social media page.
+     - `visibility` (Boolean, Default False) – indicates if the link is public.
+
+---
+
+#### 4. **Cities Table**
+   - Stores city-specific data to create location-based lists.
+   - **Fields**:
+     - `city_id` (PK, UniqueID) – unique identifier for each city.
+     - `name` (Varchar, Not Null) – name of the city (e.g., “Goa”).
+     - `cover_image` (Varchar, Optional) – URL for a cover image representing the city.
+
+---
+
+#### 5. **Categories Table**
+   - Stores predefined and user-defined categories for organizing places.
+   - **Fields**:
+     - `category_id` (PK, Integer) – unique identifier for each category.
+     - `name` (Varchar, Not Null) – name of the category (e.g., “Food & Beverage”).
+     - `custom_category` (Boolean, Default False) – indicates if it’s user-defined.
+     - `account_id` (FK, Optional, references `Accounts.account_id`) – links to the user account if custom.
+
+---
+
+#### 6. **Places Table**
+   - Stores details about each place added by the user, including its category and location.
+   - **Fields**:
+     - `place_id` (PK, Integer) – unique identifier for each place.
+     - `name` (Varchar, Not Null) – name of the place.
+     - `category_id` (FK, Integer, references `Categories.category_id`) – links each place to a category.
+     - `latitude` (Decimal) – latitude for map placement.
+     - `longitude` (Decimal) – longitude for map placement.
+     - `city_id` (FK, Integer, references `Cities.city_id`) – associates each place with a specific city.
+     - `address` (Varchar) – address of the place.
+     - `details` (Text) – additional details about the place.
+     - `highlights` (String) – highlights or key points about the place.
+     - `timings` (String) – operating hours.
+
+---
+
+#### 7. **Favourites Table**
+   - Links each user’s favorite places, associating them with cities and categories.
+   - **Fields**:
+     - `favourite_id` (PK, Integer) – unique identifier for each favorite.
+     - `user_id` (FK, Integer, references `Users.user_id`) – links to the user.
+     - `place_id` (FK, Integer, references `Places.place_id`) – links to the place.
+     - `city_id` (FK, Integer, references `Cities.city_id`) – links to the specific city.
+
+---
+
+#### 8. **Lists Table**
+   - Represents each list created by users, with a unique `slug` for URL-friendly list names.
+   - **Fields**:
+     - `list_id` (PK, Integer) – unique identifier for each list.
+     - `account_id` (FK, Integer, references `Accounts.account_id`) – links to the account.
+     - `title` (Varchar, Not Null) – title of the list (e.g., “Paris Guide”).
+     - `slug` (Varchar, Not Null) – URL-friendly list name for route generation.
+     - `location_id` (FK, references `Cities.city_id`, Optional) – location for the list.
+     - `description` (Text) – description or summary of the list.
+     - `created_at` (Timestamp, Default Current Timestamp) – list creation date.
+     - `updated_at` (Timestamp, Default Current Timestamp) – list update date.
+
+---
+
+#### 9. **QRs Table**
+   - Stores QR codes for profiles and lists, linking to specific URLs.
+   - **Fields**:
+     - `qr_id` (PK, UniqueID) – unique identifier for each QR code.
+     - `account_id` (FK, Integer, references `Accounts.account_id`) – links to the account.
+     - `list_id` (FK, Integer, references `Lists.list_id`, Optional) – links to specific list if applicable.
+     - `type` (Enum, e.g., "profile", "list") – differentiates between profile and list QR codes.
+     - `link` (Varchar, Not Null) – URL the QR code resolves to.
+     - `image` (Blob) – stores the QR code image.
+
+---
+
+#### 10. **Analytics Table**
+   - Tracks scan and click data for QR codes, with date-based filtering options.
+   - **Fields**:
+     - `analytics_id` (PK, UniqueID) – unique identifier for each analytics record.
+     - `qr_id` (FK, UniqueID, references `QRs.qr_id`) – links analytics to a specific QR code.
+     - `click_count` (Integer, Default 0) – tracks link clicks.
+     - `scan_count` (Integer, Default 0) – tracks QR code scans.
+     - `CTR` (Decimal, Optional) – click-through rate.
+     - `list_id` (FK, references `Lists.list_id`, Optional) – for tracking list-specific metrics.
+     - `place_id` (FK, Optional, references `Places.place_id`) – for tracking place-specific performance.
+     - `timestamp` (Timestamp, Default Current Timestamp) – date and time of the event.
+
+---
+
+#### 11. **Countries and Cities Tables**
+   - Stores country and city data for location-based features and autofill.
+   - **Countries**:
+     - `country_id` (PK, UniqueID) – unique identifier for each country.
+     - `name` (Varchar, Not Null) – name of the country.
+
+   - **Cities**:
+     - `city_id` (PK, UniqueID) – unique identifier for each city.
+     - `name` (Varchar, Not Null) – name of the city.
+     - `country_id` (FK, UniqueID, references `Countries.country_id`) – links each city to a country.
+
+---
+
+#### 12. **List_Place Table (Junction for Lists and Places)**
+   - Establishes a many-to-many relationship between lists and places.
+   - **Fields**:
+     - `list_place_id` (PK, Integer) – unique identifier for each record.
+     - `list_id` (FK, Integer, references `Lists.list_id`) – links to a list.
+     - `place_id` (FK, Integer, references `Places.place_id`) – links to a place.
+
+---
+
+### Summary of Key Table Relationships
+
+1. **Accounts, Users, and Social Media**: Supports user profile creation and social media linking.
+2. **Cities, Categories, and Places**: Organizes location-based recommendations by category within cities.
+3. **Lists, Favorites, and QRs**: Supports list creation, favorite management, and QR code linking for sharing.
+4. **Analytics**: Tracks performance for QR codes, providing insights for users.
+5. **Countries and Cities**: Supports global location data for autofill and place categorization
